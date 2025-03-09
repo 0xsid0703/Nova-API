@@ -1,8 +1,8 @@
 // pages/api/getLatestProtein.ts
+import prisma from '@/lib/prisma';
 import { NextResponse } from 'next/server';
 
 export async function GET() {
-    const prisma = (await import('@/lib/prisma')).default;
     try {
         const latestProtein = await prisma.protein.findFirst({
             orderBy: { createdAt: 'desc' },
