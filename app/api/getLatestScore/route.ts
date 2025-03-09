@@ -1,14 +1,15 @@
-import prisma from '@/lib/prisma';
 import { NextResponse } from 'next/server';
 
 export async function POST(req: Request) {
-    const { protein } = await req.json();
-
-    if (!protein || typeof protein !== 'string') {
-        return NextResponse.json({ error: 'Invalid protein value' }, { status: 400 });
-    }
-
     try {
+        const prisma = (await import('@/lib/prisma')).default; // Dynamic import
+
+        const { protein } = await req.json();
+
+        if (!protein || typeof protein !== 'string') {
+            return NextResponse.json({ error: 'Invalid protein value' }, { status: 400 });
+        }
+
         const winProtein = await prisma.score.findFirst({
             where: { protein },
             orderBy: { createdAt: 'desc' },
@@ -18,9 +19,20 @@ export async function POST(req: Request) {
             return NextResponse.json({ error: 'No protein found' }, { status: 404 });
         }
 
-        // ✅ You MUST return here
-        return NextResponse.json({ protein: winProtein }, { status: 201 });
+        return NextResponse.json(
+            { protein: winProtein },
+            {
+                status: 200,
+                headers: {
+                    'Cache-Control': 'no-store, no-cache, must-revalidate, proxy-revalidate',
+                    'Pragma': 'no-cache',
+                    'Expires': '0',
+                    'Surrogate-Control': 'no-store',
+                },
+            }
+        );
     } catch (error) {
-        return NextResponse.json({ error: 'Failed to save protein' }, { status: 500 });
+        console.error('Error fetching latest score:', error);
+        return NextResponse.json({ error: 'Failed to fetch protein' }, { status: 500 });
     }
 }
