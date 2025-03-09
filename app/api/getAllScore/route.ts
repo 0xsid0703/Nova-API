@@ -1,7 +1,7 @@
-import prisma from '@/lib/prisma';
 import { NextResponse } from 'next/server';
 
 export async function GET() {
+    const prisma = (await import('@/lib/prisma')).default;
     try {
         const winProtein = await prisma.score.findMany();
 
