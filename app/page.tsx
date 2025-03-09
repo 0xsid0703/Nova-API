@@ -7,7 +7,7 @@ export default function Home() {
   const { data, error, isLoading } = useSWR('/api/getAllScore', fetcher);
   const setClick = async () => {
     const response = await axios.post("/api/setLatestProtein", {
-      protein: "FFFFFFF"
+      protein: "ERERE"
     })
     console.log("Set response", response.data)
   }
