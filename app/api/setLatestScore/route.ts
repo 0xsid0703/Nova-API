@@ -1,7 +1,7 @@
+import prisma from '@/lib/prisma';
 import { NextResponse } from 'next/server';
 
 export async function POST(req: Request) {
-    const prisma = (await import('@/lib/prisma')).default;
     const { protein, score, product } = await req.json();
     console.log({ protein, score, product })
     // Validate input
