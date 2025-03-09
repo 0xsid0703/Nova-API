@@ -1,0 +1,22 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Protein {
+  id        Int      @id @default(autoincrement())
+  protein   String
+  createdAt DateTime @default(now())
+}
+
+model Score {
+  id        Int      @id @default(autoincrement())
+  protein   String 
+  score     Float
+  product   String
+  createdAt DateTime @default(now())
+}

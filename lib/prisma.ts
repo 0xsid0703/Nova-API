@@ -1,5 +1,14 @@
-import { PrismaClient } from "@prisma/client";
+// lib/prisma.ts
+import { PrismaClient } from '@prisma/client';
 
-const prisma = new PrismaClient();
+const prismaClientSingleton = () => new PrismaClient();
+
+declare global {
+  let prisma: undefined | ReturnType<typeof prismaClientSingleton>;
+}
+
+const prisma = globalThis.prisma ?? prismaClientSingleton();
+
+if (process.env.NODE_ENV !== 'production') globalThis.prisma = prisma;
 
 export default prisma;
