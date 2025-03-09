@@ -1,9 +1,8 @@
+import prisma from '@/lib/prisma';
 import { NextResponse } from 'next/server';
 
 export async function POST(req: Request) {
     try {
-        const prisma = (await import('@/lib/prisma')).default; // Dynamic import
-
         const { protein } = await req.json();
 
         if (!protein || typeof protein !== 'string') {
