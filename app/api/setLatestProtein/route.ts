@@ -12,6 +12,8 @@ export async function POST(req: Request) {
             data: { protein },
         });
 
+        await prisma.$transaction([]);
+
         // ✅ You MUST return here
         return NextResponse.json({ protein: savedProtein }, { status: 201 });
     } catch (error) {
