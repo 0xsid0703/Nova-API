@@ -5,7 +5,7 @@ export async function GET() {
     try {
         const prisma = (await import('@/lib/prisma')).default; // Dynamic import
 
-        const winProtein = await prisma.score.findMany();
+        const winProtein = await prisma.score.findMany({orderBy: { createdAt: 'asc' }});
 
         if (winProtein.length === 0) {
             return NextResponse.json({ error: 'No protein found' }, { status: 404 });
