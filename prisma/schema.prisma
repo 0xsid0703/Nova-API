@@ -15,8 +15,17 @@ model Protein {
 
 model Score {
   id        Int      @id @default(autoincrement())
-  protein   String 
+  protein   String
   score     Float
   product   String
+  createdAt DateTime @default(now())
+}
+
+model Synth {
+  id        Int      @id @default(autoincrement())
+  uid       Int
+  sigma     Float
+  dt        Float
+  flag      Int
   createdAt DateTime @default(now())
 }
