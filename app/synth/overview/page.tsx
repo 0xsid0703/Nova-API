@@ -9,7 +9,7 @@ import RecentScore from "@/components/RecentScore";
 import axios from "axios";
 
 export default function Home() {
-    const [miners, setMiners] = useState([])
+    const [miners, setMiners] = useState<number[]>([])
     useEffect(() => {
         const fetchSynth = async () => {
             const response = await axios.get("/api/getAllSynth");
@@ -48,7 +48,7 @@ export default function Home() {
                 <Reward miners={miners} />
             </div> :
                 <div className="flex w-full">
-                    <RecentScore selectedDay={selectedDay} mm={miners} />
+                    <RecentScore selectedDay={selectedDay} mm={miners.join(",")} />
                 </div>}
         </div >
     );

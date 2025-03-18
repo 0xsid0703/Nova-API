@@ -4,11 +4,7 @@ export async function GET(req: Request) {
 
     const url = new URL(req.url); // Create a URL object from the request URL
     const day = url.searchParams.get('day') as string; // Get the 'day' query parameter
-    const mm = url.searchParams.get('miners') as string; // Get the 'day' query parameter
-    const miners = mm?.split(",")
-        .map((miner: string) => parseInt(miner.trim(), 10))
-        .filter((miner: number) => !isNaN(miner));
-    console.log({ day })
+    const miners = url.searchParams.get('miners')?.split(',').map((uid: string) => parseInt(uid.trim(), 10)) || [];
     const today = new Date().toISOString().split('T')[0];
     console.log({ today });
 
