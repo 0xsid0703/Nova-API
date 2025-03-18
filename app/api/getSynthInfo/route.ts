@@ -4,11 +4,7 @@ import { NextResponse } from 'next/server';
 export async function POST(req: Request) {
     try {
         const { uid } = await req.json();
-
-        if (!uid || typeof uid !== 'number') {
-            return NextResponse.json({ error: 'Invalid uid value' }, { status: 400 });
-        }
-
+        console.log({ uid })
         const synth = await prisma.synth.findFirst({
             where: { uid },
             orderBy: { createdAt: 'desc' },
