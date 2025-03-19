@@ -17,7 +17,7 @@ export async function POST(req: Request) {
         let savedSynth;
 
         if (existingUID) {
-            if (uid > existingUID.uid) {
+            if (uid === existingUID.uid) {
                 savedSynth = await prisma.synth.delete({
                     where: { id: existingUID.id },
                 });
