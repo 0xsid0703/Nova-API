@@ -8,7 +8,7 @@ type Props = {
 }
 
 const TaoXnet = ({ coldkey }: Props) => {
-    const { data, error, isLoading } = useSWR(`/api/getTaoXnet?coldkey=${coldkey}`, fetcher)
+    const { data, error, isLoading } = useSWR(`/api/getTaoXnet1?coldkey=${coldkey}`, fetcher)
     const copyKey = (key: string) => {
         navigator.clipboard.writeText(key)
     }
