@@ -1,22 +1,35 @@
+import axios from "axios";
 import { NextResponse } from "next/server";
 
-export async function GET() {
-    try {
-        const response = await fetch("https://taomarketcap.com/api/subnets", {
-            method: "GET",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            cache: "no-cache"
-          });
-      
-          if (!response.ok) {
-            return NextResponse.json({ error: "Failed to fetch data" });
-          }
-          
-          const data = await response.json();
-          return NextResponse.json(data);
-    } catch (error) {
-        return NextResponse.json({ error: (error as Error).message || "Internal Server Error" });
+export async function GET(req: Request) {
+  const url = new URL(req.url); // Create a URL object from the request URL
+  const subnetIDs = url.searchParams.get('subnetIDs') as string; // Get the 'day' query parameter
+  const subnet_ids = subnetIDs.split(',').map((subnet: string) => parseInt(subnet.trim(), 10));
+  try {
+    const response = await fetch("https://taomarketcap.com/api/subnets", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      cache: "no-cache"
+    });
+
+    const subnets = await response.json();
+    const filteredSubnets = subnets.filter((subnet: any) => subnet_ids.includes(subnet.subnet));
+
+    for (const id of subnet_ids) {
+      const res = await axios.post(`https://taoxnet.io/api/v1/netuid/netinfo?network=mainnet`, { netuid: id }, { headers: { "Content-Type": "application/json" } })
+      const data = await res.data;
+      filteredSubnets.forEach((subnet: any) => {
+        if (subnet.subnet === id) {
+          subnet.reg_cost = Number(data.registrationCost)/10**9;
+          subnet.emission = Number(data.emission)/10**7;
+        }
+      });
     }
+
+    return NextResponse.json(filteredSubnets);
+  } catch (error) {
+    return NextResponse.json({ error: (error as Error).message || "Internal Server Error" });
+  }
 }
