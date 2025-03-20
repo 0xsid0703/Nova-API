@@ -15,7 +15,7 @@ const HippiusTR = ({ coldkey, hotkey, node_id, uid }: Props) => {
         revalidateOnFocus: false,
         refreshInterval: 20000
     })
-
+    console.log({ error })
     const copyKey = (key: string) => {
         navigator.clipboard.writeText(key)
     }
