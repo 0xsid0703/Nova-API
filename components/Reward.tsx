@@ -5,7 +5,7 @@ import useSWR from 'swr'
 type Props = {
     miners: number[]
 }
-const Reward = ({miners}: Props) => {
+const Reward = ({ miners }: Props) => {
     const { data, error, isLoading } = useSWR('/api/getRewards', fetcher, {
         revalidateOnFocus: false,
         refreshInterval: 5000
@@ -13,6 +13,7 @@ const Reward = ({miners}: Props) => {
     if (isLoading) return <div>Loading...</div>
     if (error) return <div>Error loading data</div>
     if (data) {
+        console.log({ data })
         const sortedData = data.sort((a: any, b: any) => b.incentive - a.incentive)
         const addedGrade = sortedData.map((item: any, index: number) => ({
             ...item,
