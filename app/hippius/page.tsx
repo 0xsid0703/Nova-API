@@ -52,6 +52,12 @@ const HippiusPage = () => {
             uid: "137"
         },
         {
+            hotkey: "5FUZYGEsgtbjVHg2kMvTMN855hYCKgrdTZJsNzbQNEq8josA",
+            coldkey: "5FvV6vtap12HyEy6P3WSVoCFPti6Fc3y3k3vj5Ng5TXgPhVD",
+            node_id: "12D3KooWPbFodBnN4VGdHDjezQ64E7Vy9YwXVPcYktL2MTqPLiuF",
+            uid: "146"
+        },
+        {
             hotkey: "5CQ7zcFxh7yMEpgWbWneqyWaMLca7uDtHvsy8dSqMJfDF2aA",
             coldkey: "5FvV6vtap12HyEy6P3WSVoCFPti6Fc3y3k3vj5Ng5TXgPhVD",
             node_id: "12D3KooWM2J8wCB93DhTvgfUNtRpaBiVmAaXRst4r1qn2mavaUnK",
