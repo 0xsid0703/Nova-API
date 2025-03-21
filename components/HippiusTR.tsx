@@ -13,7 +13,7 @@ type Props = {
 const HippiusTR = ({ coldkey, hotkey, node_id, uid }: Props) => {
     const { data, error, isLoading } = useSWR(`/api/getStatusHippius?nodeid=${node_id}`, fetcher, {
         revalidateOnFocus: false,
-        refreshInterval: 62000
+        refreshInterval: 70000
     })
     console.log({ error })
     const copyKey = (key: string) => {
