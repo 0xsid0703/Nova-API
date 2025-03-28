@@ -3,6 +3,7 @@ import React from 'react'
 import useSWR from 'swr'
 import { fetcher } from '@/utils/fetcher'
 import axios from 'axios'
+import ImageLoadingSpinner from '@/components/ImageLoadingSpinner'
 
 const BoardPage = () => {
     const { data, error, isLoading } = useSWR('/api/getTaoXNet', fetcher)
@@ -10,8 +11,13 @@ const BoardPage = () => {
         const res = await axios.post('/api/getExtrinsic', { hotkey: item.hotkey })
         console.log(res)
     }
-    if (isLoading) return <div>Loading...</div>
-    if (error) return <div>Something went wrong</div>
+    if (isLoading) return <div className='w-full h-full'>
+        <ImageLoadingSpinner />
+    </div>
+    if (error) return <div className='w-full h-full flex flex-col gap-3 items-center justify-center'>
+        <img src="/mark.png" className='w-32 h-24' alt='' />
+        Data Fetching Error
+    </div>
     if (data) {
         // const filteredData = useMemo(() => {
         //     if(uid && coldkey) {

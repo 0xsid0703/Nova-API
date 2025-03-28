@@ -2,6 +2,8 @@
 import React from 'react'
 import { fetcher } from '@/utils/fetcher'
 import useSWR from 'swr'
+import clsx from 'clsx'
+
 type Props = {
     miner: number
 }
@@ -11,9 +13,7 @@ const ValidateItem = ({ miner }: Props) => {
     if (isLoading) return <div>Loading...</div>
     if (error) return <div>Error loading data</div>
     if (data) return <div className='flex flex-row gap-2 items-center text-sm'>
-        <div className='rounded-full w-14 h-8 flex items-center justify-center blur-sm hover:blur-0 transition-all duration-300 bg-indigo-500 cursor-pointer'>{miner}</div>
-        <div>{data.validated}</div>
-        <div>{data.validated ? 'Nice' : data.reason}</div>
+        <div className={clsx('rounded-full w-14 h-8 flex items-center justify-center cursor-pointer', data.validated ? 'bg-indigo-500' : 'bg-red-500')}>{miner}</div>
     </div>
 }
 

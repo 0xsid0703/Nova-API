@@ -43,10 +43,8 @@ type Props = {
 }
 
 const RecentScore = ({ selectedDay, mm }: Props) => {
-    const { data, error, isLoading } = useSWR(`/api/getScores?day=${selectedDay}&miners=${mm}`, fetcher)
+    const { data } = useSWR(`/api/getScores?day=${selectedDay}&miners=${mm}`, fetcher)
 
-    if (isLoading) return <div>Loading...</div>
-    if (error) return <div>Error loading data</div>
     if (data) {
         console.log(data)
         const labels = data[0].Date

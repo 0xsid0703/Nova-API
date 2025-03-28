@@ -6,12 +6,10 @@ type Props = {
     miners: number[]
 }
 const Reward = ({ miners }: Props) => {
-    const { data, error, isLoading } = useSWR('/api/getRewards', fetcher, {
+    const { data } = useSWR('/api/getRewards', fetcher, {
         revalidateOnFocus: false,
         refreshInterval: 5000
     })
-    if (isLoading) return <div>Loading...</div>
-    if (error) return <div>Error loading data</div>
     if (data) {
         console.log({ data })
         const sortedData = data.sort((a: any, b: any) => b.incentive - a.incentive)

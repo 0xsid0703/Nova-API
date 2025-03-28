@@ -6,9 +6,7 @@ type Props = {
     miners: number[]
 }
 const Score = ({miners}: Props) => {
-    const { data, error, isLoading } = useSWR('https://synth.mode.network/validation/scores/latest', fetcher)
-    if (isLoading) return <div>Loading...</div>
-    if (error) return <div>Error loading data</div>
+    const { data } = useSWR('https://synth.mode.network/validation/scores/latest', fetcher)
     if (data) {
         const scoreSortedData = data.sort((a: any, b: any) => b.prompt_score - a.prompt_score)
         const addedGradeScore = scoreSortedData.map((item: any, index: number) => ({
@@ -26,29 +24,28 @@ const Score = ({miners}: Props) => {
             Grade: addedGradeScore[0].grade,
         }
         return (
-            <div className='w-fit p-10 border border-white rounded-2xl'>
+            <div className='w-fit rounded-2xl'>
                 <div className='flex flex-col gap-5'>
-                    <div className='text-2xl font-bold text-center'>Score</div>
                     <table className='w-full table-auto'>
                         <thead>
                             <tr>
-                                <th className='py-2'>UID</th>
-                                <th className='py-2'>Score</th>
-                                <th className='py-2'>Grade</th>
+                                <th className='py-1'>UID</th>
+                                <th className='py-1'>Score</th>
+                                <th className='py-1'>Grade</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr>
-                                <td className='text-center'>{top.UID}</td>
-                                <td className='text-center px-10'>{top.Score}</td>
-                                <td className='text-center'>{top.Grade}</td>
+                                <td className='text-center py-1'>{top.UID}</td>
+                                <td className='text-center px-10 py-1'>{top.Score}</td>
+                                <td className='text-center py-1'>{top.Grade}</td>
                             </tr>
                             {
                                 filteredData.map((item: any) => 
                                     <tr>
-                                        <td className='text-center blur-sm hover:blur-0 transition-all duration-300 cursor-pointer'>{item.miner_uid}</td>
-                                        <td className='text-center'>{item.prompt_score}</td>
-                                        <td className='text-center'>{item.grade}</td>
+                                        <td className='text-center cursor-pointer py-1'>{item.miner_uid}</td>
+                                        <td className='text-center py-1'>{item.prompt_score}</td>
+                                        <td className='text-center py-1'>{item.grade}</td>
                                     </tr>
                                 )
                             }

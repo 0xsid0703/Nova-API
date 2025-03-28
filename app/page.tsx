@@ -1,51 +1,51 @@
 "use client"
+import ImageLoadingSpinner from "@/components/ImageLoadingSpinner";
+import { copyKey, showKey, showTaoNumber } from "@/lib/main";
 import { fetcher } from "@/utils/fetcher";
-import axios from "axios";
+import { ChevronDown } from "lucide-react";
 import useSWR from 'swr'
 
 export default function Home() {
-  const { data, error, isLoading } = useSWR('/api/getAllScore', fetcher);
-  const getClick = async () => {
-    const response = await axios.get('/api/getLatestProtein')
-    console.log("Get Response: ", response.data)
-  }
-
-    const getScoreClick = async () => {
-    const response = await axios.post('/api/getLatestScore', { protein: "PDSD89D" })
-    console.log("Get Score Response: ", response.data)
-  }
-  if (isLoading) return <div>Loading...</div>
-  if (error) return <div>Something went wrong</div>
+  const { data, error, isLoading } = useSWR('/api/getDashboard', fetcher);
+  if (isLoading) return <div className='w-full h-full'>
+        <ImageLoadingSpinner />
+    </div>
+    if (error) return <div className='w-full h-full flex flex-col gap-3 items-center justify-center'>
+        <img src="/mark.png" className='w-32 h-24' alt='' />
+        Data Fetching Error
+    </div>
   if (data) {
-    console.log({ data })
     return (
-      <div className="mx-5 md:mx-10 flex flex-col gap-2">
-        <button onClick={getClick}>Get Latest Protein</button>
-        <button onClick={getScoreClick}>Get Latest Score</button>
-        <div className="w-full">
-          <table className='w-full table-auto'>
-            <thead>
-              <tr>
-                <th className="text-center">ID</th>
-                <th className='text-center'>Protein</th>
-                <th className='text-center'>Score</th>
-                <th className='text-center'>Product</th>
-              </tr>
-            </thead>
-            <tbody>
-              {
-                data && data.protein && data.protein.map((score:any, index:number) => (
-                  <tr key={index}>
-                    <td className="text-center">{index + 1}</td>
-                    <td className='text-center'>{score.protein}</td>
-                    <td className='text-center'>{score.score}</td>
-                    <td className='text-center'>{score.product}</td>
-                  </tr>
-                ))
-              }
-            </tbody>
-          </table>
-        </div>
+      <div className="w-full flex flex-col gap-5 items-center justify-center">
+        <div className="text-2xl font-bold text-center">Dashboard</div>
+        <table className="w-full">
+          <thead>
+            <tr className="bg-slate-700">
+              <th className="text-center py-2">ID</th>
+              <th className='text-center py-2'>Name</th>
+              <th className='text-center py-2'>Coldkey</th>
+              <th className='text-center py-2'>Stake</th>
+              <th className='text-center py-2'>Free</th>
+              <th className='text-center py-2'>Total</th>
+              <th className='text-center py-2'></th>
+            </tr>
+          </thead>
+          <tbody>
+            {
+              data && data.length > 0 && data.map((item: any, index: number) => (
+                <tr key={index}>
+                  <td className="text-center py-2">{index + 1}</td>
+                  <td className='text-center py-2'>{item.name}</td>
+                  <td className='text-center py-2' onClick={() => copyKey(item.coldkey)}>{showKey(item.coldkey)}</td>
+                  <td className='text-center py-2'>{showTaoNumber(item.staked)} 𝞃</td>
+                  <td className='text-center py-2'>{showTaoNumber(item.free)} 𝞃</td>
+                  <td className='text-center py-2'>{showTaoNumber(item.total)} 𝞃</td>
+                  <td className='text-center py-2 cursor-pointer'><ChevronDown /></td>
+                </tr>
+              ))
+            }
+          </tbody>
+        </table>
       </div >
     );
   }

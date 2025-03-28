@@ -2,6 +2,7 @@
 import { fetcher } from '@/utils/fetcher'
 import React from 'react'
 import useSWR from 'swr'
+import { copyKey, showKey, showTaoNumber, showNumber } from '@/lib/main'
 
 type Props = {
     coldkey: string
@@ -9,20 +10,6 @@ type Props = {
 
 const TaoXnet = ({ coldkey }: Props) => {
     const { data, error, isLoading } = useSWR(`/api/getTaoXnet1?coldkey=${coldkey}`, fetcher)
-    const copyKey = (key: string) => {
-        navigator.clipboard.writeText(key)
-    }
-    const showKey = (key: string) => {
-        return key.slice(0, 4) + '***' + key.slice(-4)
-    }
-    const showTaoNumber = (number: number) => {
-        const taoNumber = number / 1e9
-        return parseFloat(taoNumber.toString()).toFixed(2)
-    }
-    const showNumber = (number: number, unit: number) => {
-        return parseFloat(number.toString()).toFixed(unit)
-    }
-
     if (isLoading) return <div>Loading...</div>
     if (error) return <div>Error loading data</div>
     if (data) {

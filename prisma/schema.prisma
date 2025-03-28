@@ -29,3 +29,16 @@ model Synth {
   flag      Int
   createdAt DateTime @default(now())
 }
+
+model Coldkey {
+  id        Int      @id @default(autoincrement())
+  coldkey   String
+  name      String
+  createdAt DateTime @default(now())
+}
+
+model Subnets {
+  id        Int      @id @default(autoincrement())
+  subnet    Int
+  createdAt DateTime @default(now())
+}
