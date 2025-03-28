@@ -56,8 +56,9 @@ export async function GET() {
                 };
             })
                 .filter((item: any) => item.isMiner)
-                .sort((a: any, b: any) => a.incentive - b.incentive)
-                .map((item: any, i: number) => ({ ...item, ranking: i + 1 }));
+                .sort((a: any, b: any) => b.incentive - a.incentive)
+                .map((item: any, i: number) => ({ ...item, ranking: i + 1 }))
+                .sort((a: any, b: any) => a.incentive - b.incentive);
             const subnet_info = subnet_data.find((item: any) => item.subnet === subnet.netuid);
             result_data.push({ netuid: subnet.netuid, name: subnet_info.name, letter: subnet_info.letter, price: subnet_info.price, marketcap: subnet_info.marketcap, chartData })
         })
