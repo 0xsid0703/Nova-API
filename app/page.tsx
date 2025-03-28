@@ -36,7 +36,7 @@ export default function Home() {
                 <tr key={index}>
                   <td className="text-center py-2">{index + 1}</td>
                   <td className='text-center py-2'>{item.name}</td>
-                  <td className='text-center py-2' onClick={() => copyKey(item.coldkey)}>{showKey(item.coldkey)}</td>
+                  <td className='text-center py-2 cursor-pointer' onClick={() => copyKey(item.coldkey)}>{showKey(item.coldkey)}</td>
                   <td className='text-center py-2'>{showTaoNumber(item.staked)} 𝞃</td>
                   <td className='text-center py-2'>{showTaoNumber(item.free)} 𝞃</td>
                   <td className='text-center py-2'>{showTaoNumber(item.total)} 𝞃</td>
