@@ -8,7 +8,7 @@ type Props = {
 const Score = ({miners}: Props) => {
     const { data } = useSWR('https://synth.mode.network/validation/scores/latest', fetcher)
     if (data) {
-        const scoreSortedData = data.sort((a: any, b: any) => b.prompt_score - a.prompt_score)
+        const scoreSortedData = data.sort((a: any, b: any) => a.prompt_score - b.prompt_score)
         const addedGradeScore = scoreSortedData.map((item: any, index: number) => ({
             ...item,
             grade: index + 1,
